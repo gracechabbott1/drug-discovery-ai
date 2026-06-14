@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grace's Drug Discovery AI Plan</title>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+        }
+        #root {
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        // React component code
+        const { useState, useEffect } = React;
+
+        // Lucide React icon components (simplified)
+        const ChevronDown = ({ className }) => (
+            <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+            </svg>
+        );
+
+        const ExternalLink = ({ className }) => (
+            <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+            </svg>
+        );
+
+        const CheckCircle = ({ className }) => (
+            <svg className={className} fill="currentColor" viewBox="0 0 24 24">
+                <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z" />
+                <circle cx="12" cy="12" r="11" fill="none" stroke="currentColor" strokeWidth="2"/>
+            </svg>
+        );
+
+        const Circle = ({ className }) => (
+            <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="11" strokeWidth={2} />
+            </svg>
+        );
+
+        const BookOpen = ({ className }) => (
+            <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C6.5 6.253 2 10.998 2 17.001c0 5.999 4.5 10.747 10 10.747 5.5 0 10-4.748 10-10.747 0-6.003-4.5-10.748-10-10.748z" />
+            </svg>
+        );
+
+        const DrugDiscoveryAISyllabus = () => {
+            const notionDbUrl = 'https://app.notion.com/p/5ba48240dc1e41d68d5e11bd58bc21e1';
+
+            const [completedResources, setCompletedResources] = useState({});
+            const [expandedWeek, setExpandedWeek] = useState(1);
+
+            useEffect(() => {
+                const saved = localStorage.getItem('drugDiscoveryAIProgress');
+                if (saved) {
+                    setCompletedResources(JSON.parse(saved));
+                }
+            }, []);
+
+            useEffect(() => {
+                localStorage.setItem('drugDiscoveryAIProgress', JSON.stringify(completedResources));
+            }, [completedResources]);
+
+            const toggleResource = (id) => {
+                setCompletedResources(prev => ({
+                    ...prev,
+                    [id]: !prev[id]
+                }));
+            };
+
+            const curriculum = [
+                {
+                    week: 1,
+                    title: 'Python Fundamentals & Data Basics',
+                    description: 'Set up your environment and master the basics',
+                    resources: [
+                        {
+                            id: 'w1-1',
+                            name: 'Python for Data Science (Coursera Plus)',
+                            type: 'Video',
+                            time: '4 hours',
+                            link: 'https://www.coursera.org/learn/python-data-analysis',
+                            notes: 'Pandas, NumPy basics'
+                        },
+                        {
+                            id: 'w1-2',
+                            name: 'Jupyter Notebook Setup Guide',
+                            type: 'Blog Post',
+                            time: '30 min',
+                            link: 'https://jupyter.org/install',
+                            notes: 'Get your environment ready'
+                        },
+                        {
+                            id: 'w1-3',
+                            name: 'Drug Discovery Dataset Intro',
+                            type: 'Dataset',
+                            time: '1 hour',
+                            link: 'https://www.ebi.ac.uk/chembl/',
+                            notes: 'Explore ChEMBL database'
+                        }
+                    ]
+                },
+                {
+                    week: 2,
+                    title: 'Data Wrangling & Visualization',
+                    description: 'Clean and explore biological data',
+                    resources: [
+                        {
+                            id: 'w2-1',
+                            name: 'Pandas for Data Cleaning (Coursera Plus)',
+                            type: 'Video',
+                            time: '5 hours',
+                            link: 'https://www.coursera.org/learn/python-data-analysis',
+                            notes: 'Handle missing data, normalization'
+                        },
+                        {
+                            id: 'w2-2',
+                            name: 'Matplotlib & Seaborn Tutorial',
+                            type: 'Blog Post',
+                            time: '2 hours',
+                            link: 'https://seaborn.pydata.org/tutorial.html',
+                            notes: 'Data visualization fundamentals'
+                        },
+                        {
+                            id: 'w2-3',
+                            name: 'Project: Explore PubChem Dataset',
+                            type: 'Project',
+                            time: '3 hours',
+                            link: 'https://pubchem.ncbi.nlm.nih.gov/',
+                            notes: 'Download, clean, visualize compound data'
+                        }
+                    ]
+                },
+                {
+                    week: 3,
+                    title: 'First ML Project: Compound Property Prediction',
+                    description: 'Build your first supervised learning model',
+                    resources: [
+                        {
+                            id: 'w3-1',
+                            name: 'Scikit-learn Introduction (Coursera Plus)',
+                            type: 'Video',
+                            time: '4 hours',
+                            link: 'https://www.coursera.org/learn/machine-learning',
+                            notes: 'Linear regression, train/test split'
+                        },
+                        {
+                            id: 'w3-2',
+                            name: 'Molecular Fingerprints Explained',
+                            type: 'Blog Post',
+                            time: '1.5 hours',
+                            link: 'https://www.rdkit.org/docs/',
+                            notes: 'RDKit library for molecular features'
+                        },
+                        {
+                            id: 'w3-3',
+                            name: 'Project: Predict Compound Solubility',
+                            type: 'Project',
+                            time: '5 hours',
+                            link: 'https://github.com/topics/drug-discovery-ml',
+                            notes: 'Use ChEMBL data, train regression model, evaluate'
+                        }
+                    ]
+                },
+                {
+                    week: 4,
+                    title: 'Evaluation Metrics & Model Validation',
+                    description: 'Understand model performance deeply',
+                    resources: [
+                        {
+                            id: 'w4-1',
+                            name: 'Classification & Regression Metrics (Coursera Plus)',
+                            type: 'Video',
+                            time: '3 hours',
+                            link: 'https://www.coursera.org/learn/machine-learning',
+                            notes: 'Precision, recall, F1, RMSE, ROC-AUC'
+                        },
+                        {
+                            id: 'w4-2',
+                            name: 'Cross-Validation & Overfitting',
+                            type: 'Blog Post',
+                            time: '1 hour',
+                            link: 'https://scikit-learn.org/stable/modules/cross_validation.html',
+                            notes: 'K-fold, stratified CV'
+                        },
+                        {
+                            id: 'w4-3',
+                            name: 'Project: Validate Compound Classification Model',
+                            type: 'Project',
+                            time: '4 hours',
+                            link: 'https://www.kaggle.com/datasets',
+                            notes: 'Build classifier (e.g., drug-like vs non-drug), report metrics'
+                        }
+                    ]
+                },
+                {
+                    week: 5,
+                    title: 'Core ML: Supervised Learning Deep Dive',
+                    description: 'Master the fundamentals (Ng course weeks 1-3)',
+                    resources: [
+                        {
+                            id: 'w5-1',
+                            name: 'Andrew Ng: Regression & Logistic Regression (Coursera Plus)',
+                            type: 'Video',
+                            time: '8 hours',
+                            link: 'https://www.coursera.org/learn/machine-learning',
+                            notes: 'Weeks 1-2 of Ng course'
+                        },
+                        {
+                            id: 'w5-2',
+                            name: 'Linear Algebra Review (3Blue1Brown)',
+                            type: 'Video',
+                            time: '2 hours',
+                            link: 'https://www.youtube.com/playlist?list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab',
+                            notes: 'Refresh matrices, vectors, transformations'
+                        },
+                        {
+                            id: 'w5-3',
+                            name: 'Implementing Models from Scratch (NumPy)',
+                            type: 'Project',
+                            time: '4 hours',
+                            link: 'https://github.com/topics/machine-learning',
+                            notes: 'Code linear regression, logistic regression without sklearn'
+                        }
+                    ]
+                },
+                {
+                    week: 6,
+                    title: 'Tree-Based Models & Ensemble Methods',
+                    description: 'Learn decision trees, random forests, gradient boosting',
+                    resources: [
+                        {
+                            id: 'w6-1',
+                            name: 'Decision Trees & Random Forests (Coursera Plus)',
+                            type: 'Video',
+                            time: '6 hours',
+                            link: 'https://www.coursera.org/learn/machine-learning',
+                            notes: 'Week 3-4 of Ng course'
+                        },
+                        {
+                            id: 'w6-2',
+                            name: 'XGBoost & LightGBM for Drug Discovery',
+                            type: 'Blog Post',
+                            time: '2 hours',
+                            link: 'https://xgboost.readthedocs.io/',
+                            notes: 'Gradient boosting applications'
+                        },
+                        {
+                            id: 'w6-3',
+                            name: 'Project: Compare Models on ADMET Data',
+                            type: 'Project',
+                            time: '5 hours',
+                            link: 'https://www.ebi.ac.uk/chembl/',
+                            notes: 'Pull ADMET data, benchmark 5+ algorithms'
+                        }
+                    ]
+                },
+                {
+                    week: 7,
+                    title: 'Unsupervised Learning & Clustering',
+                    description: 'Discover patterns without labels',
+                    resources: [
+                        {
+                            id: 'w7-1',
+                            name: 'K-Means, Hierarchical, DBSCAN (Coursera Plus)',
+                            type: 'Video',
+                            time: '5 hours',
+                            link: 'https://www.coursera.org/learn/machine-learning',
+                            notes: 'Clustering algorithms & evaluation'
+                        },
+                        {
+                            id: 'w7-2',
+                            name: 'Dimensionality Reduction: PCA & UMAP',
+                            type: 'Blog Post',
+                            time: '1.5 hours',
+                            link: 'https://umap-learn.readthedocs.io/',
+                            notes: 'Visualize high-dimensional molecular data'
+                        },
+                        {
+                            id: 'w7-3',
+                            name: 'Project: Cluster Drug-like Compounds',
+                            type: 'Project',
+                            time: '4 hours',
+                            link: 'https://pubchem.ncbi.nlm.nih.gov/',
+                            notes: 'Use PCA/UMAP to cluster compounds by properties'
+                        }
+                    ]
+                },
+                {
+                    week: 8,
+                    title: 'Feature Engineering & Selection',
+                    description: 'Craft powerful features for drug discovery',
+                    resources: [
+                        {
+                            id: 'w8-1',
+                            name: 'Feature Engineering for ML (Coursera Plus)',
+                            type: 'Video',
+                            time: '4 hours',
+                            link: 'https://www.coursera.org/learn/machine-learning',
+                            notes: 'Scaling, encoding, interactions'
+                        },
+                        {
+                            id: 'w8-2',
+                            name: 'Molecular Descriptors & Fingerprints',
+                            type: 'Blog Post',
+                            time: '2 hours',
+                            link: 'https://www.rdkit.org/docs/GettingStarted.html',
+                            notes: 'RDKit molecular featurization'
+                        },
+                        {
+                            id: 'w8-3',
+                            name: 'Project: Feature Selection Pipeline',
+                            type: 'Project',
+                            time: '4 hours',
+                            link: 'https://scikit-learn.org/stable/modules/feature_selection.html',
+                            notes: 'Try 5+ feature selection methods, compare performance'
+                        }
+                    ]
+                },
+                {
+                    week: 9,
+                    title: 'Deep Learning Fundamentals',
+                    description: 'Neural networks from scratch (fast.ai)',
+                    resources: [
+                        {
+                            id: 'w9-1',
+                            name: 'fast.ai Practical Deep Learning, Lessons 1-3',
+                            type: 'Video',
+                            time: '6 hours',
+                            link: 'https://course.fast.ai/',
+                            notes: 'Top-down approach, PyTorch'
+                        },
+                        {
+                            id: 'w9-2',
+                            name: 'Neural Networks Intuition (3Blue1Brown)',
+                            type: 'Video',
+                            time: '1.5 hours',
+                            link: 'https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_LFPM5gQa',
+                            notes: 'Backpropagation, activation functions'
+                        },
+                        {
+                            id: 'w9-3',
+                            name: 'Project: Protein Property Prediction (Shallow NN)',
+                            type: 'Project',
+                            time: '5 hours',
+                            link: 'https://github.com/topics/protein-prediction',
+                            notes: 'Build 2-3 layer network in PyTorch'
+                        }
+                    ]
+                },
+                {
+                    week: 10,
+                    title: 'Convolutional & Recurrent Networks',
+                    description: 'CNNs, RNNs, sequence models',
+                    resources: [
+                        {
+                            id: 'w10-1',
+                            name: 'fast.ai Lessons 4-6: CNNs & Architectures',
+                            type: 'Video',
+                            time: '6 hours',
+                            link: 'https://course.fast.ai/',
+                            notes: 'ResNet, transfer learning'
+                        },
+                        {
+                            id: 'w10-2',
+                            name: 'RNNs & LSTMs for Sequences',
+                            type: 'Blog Post',
+                            time: '2 hours',
+                            link: 'https://colah.github.io/posts/2015-08-Understanding-LSTMs/',
+                            notes: 'Understanding sequence models'
+                        },
+                        {
+                            id: 'w10-3',
+                            name: 'Project: Predict Molecular Properties with CNN',
+                            type: 'Project',
+                            time: '5 hours',
+                            link: 'https://github.com/topics/deep-learning-molecules',
+                            notes: 'Use DeepChem or graph NN library'
+                        }
+                    ]
+                },
+                {
+                    week: 11,
+                    title: 'Attention & Transformers Intro',
+                    description: 'Sequence models revolution',
+                    resources: [
+                        {
+                            id: 'w11-1',
+                            name: 'Attention Is All You Need (Paper)',
+                            type: 'Paper',
+                            time: '2 hours',
+                            link: 'https://arxiv.org/abs/1706.03762',
+                            notes: 'Foundational transformer paper'
+                        },
+                        {
+                            id: 'w11-2',
+                            name: 'Illustrated Transformer Blog',
+                            type: 'Blog Post',
+                            time: '1.5 hours',
+                            link: 'https://jalammar.github.io/illustrated-transformer/',
+                            notes: 'Visual explanation of transformers'
+                        },
+                        {
+                            id: 'w11-3',
+                            name: 'fast.ai Lessons 7-9: NLP & Transformers',
+                            type: 'Video',
+                            time: '6 hours',
+                            link: 'https://course.fast.ai/',
+                            notes: 'Practical transformer applications'
+                        },
+                        {
+                            id: 'w11-4',
+                            name: 'Project: Fine-tune BERT for Drug-Target Prediction',
+                            type: 'Project',
+                            time: '5 hours',
+                            link: 'https://huggingface.co/docs/transformers/',
+                            notes: 'Use Hugging Face, work with sequences'
+                        }
+                    ]
+                },
+                {
+                    week: 12,
+                    title: 'Protein & Molecular Sequence Models',
+                    description: 'Specialized models for biology',
+                    resources: [
+                        {
+                            id: 'w12-1',
+                            name: 'Protein Folding with AlphaFold2',
+                            type: 'Blog Post',
+                            time: '1.5 hours',
+                            link: 'https://alphafold.ebi.ac.uk/',
+                            notes: 'Understanding AlphaFold structure'
+                        },
+                        {
+                            id: 'w12-2',
+                            name: 'ESM: Evolution-Scale Protein Language Models',
+                            type: 'Paper',
+                            time: '1.5 hours',
+                            link: 'https://arxiv.org/abs/2102.15807',
+                            notes: 'Protein embeddings & representations'
+                        },
+                        {
+                            id: 'w12-3',
+                            name: 'RDKit + ML for Small Molecules',
+                            type: 'Blog Post',
+                            time: '2 hours',
+                            link: 'https://www.rdkit.org/docs/',
+                            notes: 'Graph neural networks for molecules'
+                        },
+                        {
+                            id: 'w12-4',
+                            name: 'Project: Protein-Ligand Interaction Prediction',
+                            type: 'Project',
+                            time: '6 hours',
+                            link: 'https://github.com/topics/protein-ligand',
+                            notes: 'Use ESM embeddings + ML to predict binding'
+                        }
+                    ]
+                },
+                {
+                    week: 13,
+                    title: 'Graph Neural Networks (GNNs)',
+                    description: 'Learn networks for molecular structures',
+                    resources: [
+                        {
+                            id: 'w13-1',
+                            name: 'GNN Fundamentals (PyTorch Geometric)',
+                            type: 'Blog Post',
+                            time: '2 hours',
+                            link: 'https://pytorch-geometric.readthedocs.io/',
+                            notes: 'Graph convolutions, message passing'
+                        },
+                        {
+                            id: 'w13-2',
+                            name: 'Geometric Deep Learning Paper',
+                            type: 'Paper',
+                            time: '2 hours',
+                            link: 'https://arxiv.org/abs/2104.13478',
+                            notes: 'Theory of geometric deep learning'
+                        },
+                        {
+                            id: 'w13-3',
+                            name: 'MoleculeNet: Benchmarks for Molecular GNNs',
+                            type: 'Blog Post',
+                            time: '1.5 hours',
+                            link: 'https://moleculenet.org/',
+                            notes: 'Molecular property prediction benchmarks'
+                        },
+                        {
+                            id: 'w13-4',
+                            name: 'Project: Build GNN for Drug Toxicity Prediction',
+                            type: 'Project',
+                            time: '6 hours',
+                            link: 'https://github.com/topics/graph-neural-networks',
+                            notes: 'Predict ADMET properties with GNN'
+                        }
+                    ]
+                },
+                {
+                    week: 14,
+                    title: 'Generative Models: VAEs & Diffusion',
+                    description: 'Generate novel drug molecules',
+                    resources: [
+                        {
+                            id: 'w14-1',
+                            name: 'Variational Autoencoders (VAEs)',
+                            type: 'Blog Post',
+                            time: '1.5 hours',
+                            link: 'https://towardsdatascience.com/intuitively-understanding-variational-autoencoders-1bfe67eb5daf',
+                            notes: 'Generative models intro'
+                        },
+                        {
+                            id: 'w14-2',
+                            name: 'Diffusion Models & Score-Based Generative Modeling',
+                            type: 'Paper',
+                            time: '2 hours',
+                            link: 'https://arxiv.org/abs/2011.13456',
+                            notes: 'State-of-the-art generative approach'
+                        },
+                        {
+                            id: 'w14-3',
+                            name: 'Generative Models for Drug Discovery (Survey)',
+                            type: 'Paper',
+                            time: '1.5 hours',
+                            link: 'https://arxiv.org/search/?query=generative+models+drug+discovery',
+                            notes: 'Application to molecular design'
+                        },
+                        {
+                            id: 'w14-4',
+                            name: 'Project: Train VAE for Molecule Generation',
+                            type: 'Project',
+                            time: '6 hours',
+                            link: 'https://github.com/topics/molecular-generation',
+                            notes: 'Generate SMILES, visualize latent space'
+                        }
+                    ]
+                }
+            ];
+
+            const totalResources = curriculum.reduce((sum, week) => sum + week.resources.length, 0);
+            const completedCount = Object.values(completedResources).filter(Boolean).length;
+            const progressPercent = Math.round((completedCount / totalResources) * 100);
+
+            return (
+                <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-4 md:p-8">
+                    <div className="max-w-4xl mx-auto">
+                        <div className="mb-8">
+                            <div className="flex items-center gap-3 mb-4">
+                                <BookOpen className="w-8 h-8 text-indigo-600" />
+                                <h1 className="text-3xl md:text-4xl font-bold text-gray-800">
+                                    Grace's Drug Discovery AI Plan
+                                </h1>
+                            </div>
+                            <p className="text-gray-700 mb-6">
+                                A 14-week self-taught curriculum mastering machine learning for computational drug discovery. 
+                                All resources are free (using Coursera Plus through Sept 15).
+                            </p>
+
+                            <div className="bg-white rounded-lg p-4 shadow-sm">
+                                <div className="flex justify-between mb-2">
+                                    <span className="text-sm font-semibold text-gray-700">Overall Progress</span>
+                                    <span className="text-sm text-gray-600">{completedCount}/{totalResources} completed</span>
+                                </div>
+                                <div className="w-full bg-gray-200 rounded-full h-3">
+                                    <div
+                                        className="bg-indigo-600 h-3 rounded-full transition-all duration-300"
+                                        style={{ width: `${progressPercent}%` }}
+                                    />
+                                </div>
+                                <p className="text-xs text-gray-500 mt-2">{progressPercent}% complete</p>
+                            </div>
+
+                            <div className="mt-4 bg-indigo-50 border border-indigo-200 rounded-lg p-4">
+                                <p className="text-sm text-gray-700 mb-2">
+                                    <strong>📝 Take notes here:</strong>
+                                </p>
+                                <a
+                                    href={notionDbUrl}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="inline-flex items-center gap-2 text-indigo-600 hover:text-indigo-700 font-semibold"
+                                >
+                                    Drug Discovery AI Course Notes (Notion)
+                                    <ExternalLink className="w-4 h-4" />
+                                </a>
+                                <p className="text-xs text-gray-600 mt-2">
+                                    Click each resource, then add a new note in Notion with your learnings.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div className="space-y-4">
+                            {curriculum.map((week) => {
+                                const weekCompleted = week.resources.filter(r => completedResources[r.id]).length;
+                                const weekTotal = week.resources.length;
+
+                                return (
+                                    <div key={week.week} className="bg-white rounded-lg shadow-sm overflow-hidden">
+                                        <button
+                                            onClick={() => setExpandedWeek(expandedWeek === week.week ? null : week.week)}
+                                            className="w-full p-5 text-left hover:bg-indigo-50 transition-colors flex items-center justify-between"
+                                        >
+                                            <div className="flex-1">
+                                                <div className="flex items-center gap-3 mb-2">
+                                                    <h2 className="text-lg font-bold text-gray-800">
+                                                        Week {week.week}: {week.title}
+                                                    </h2>
+                                                    <span className="text-xs bg-indigo-100 text-indigo-700 px-2 py-1 rounded-full font-semibold">
+                                                        {weekCompleted}/{weekTotal}
+                                                    </span>
+                                                </div>
+                                                <p className="text-sm text-gray-600">{week.description}</p>
+                                            </div>
+                                            <ChevronDown
+                                                className={`w-5 h-5 text-gray-600 transition-transform ${
+                                                    expandedWeek === week.week ? 'transform rotate-180' : ''
+                                                }`}
+                                            />
+                                        </button>
+
+                                        {expandedWeek === week.week && (
+                                            <div className="border-t border-gray-200 p-5 space-y-3">
+                                                {week.resources.map((resource) => {
+                                                    const isCompleted = completedResources[resource.id];
+                                                    const typeColors = {
+                                                        'Video': 'bg-blue-100 text-blue-700',
+                                                        'Paper': 'bg-purple-100 text-purple-700',
+                                                        'Project': 'bg-green-100 text-green-700',
+                                                        'Blog Post': 'bg-orange-100 text-orange-700',
+                                                        'Dataset': 'bg-pink-100 text-pink-700'
+                                                    };
+
+                                                    return (
+                                                        <div
+                                                            key={resource.id}
+                                                            className={`flex items-start gap-4 p-4 rounded-lg transition-all ${
+                                                                isCompleted ? 'bg-green-50' : 'bg-gray-50 hover:bg-gray-100'
+                                                            }`}
+                                                        >
+                                                            <button
+                                                                onClick={() => toggleResource(resource.id)}
+                                                                className="mt-1 flex-shrink-0 focus:outline-none"
+                                                            >
+                                                                {isCompleted ? (
+                                                                    <CheckCircle className="w-6 h-6 text-green-600" />
+                                                                ) : (
+                                                                    <Circle className="w-6 h-6 text-gray-400 hover:text-indigo-500" />
+                                                                )}
+                                                            </button>
+
+                                                            <div className="flex-1 min-w-0">
+                                                                <div className="flex items-center gap-2 flex-wrap mb-1">
+                                                                    <h3 className={`font-semibold ${isCompleted ? 'line-through text-gray-500' : 'text-gray-800'}`}>
+                                                                        {resource.name}
+                                                                    </h3>
+                                                                    <span className={`text-xs px-2 py-1 rounded-full font-medium ${typeColors[resource.type]}`}>
+                                                                        {resource.type}
+                                                                    </span>
+                                                                </div>
+                                                                <p className="text-sm text-gray-600 mb-2">{resource.notes}</p>
+                                                                <div className="flex items-center gap-4 flex-wrap">
+                                                                    <span className="text-xs text-gray-500 font-medium">{resource.time}</span>
+                                                                    <a
+                                                                        href={resource.link}
+                                                                        target="_blank"
+                                                                        rel="noopener noreferrer"
+                                                                        className="text-xs text-indigo-600 hover:text-indigo-700 font-semibold flex items-center gap-1"
+                                                                    >
+                                                                        Open Link
+                                                                        <ExternalLink className="w-3 h-3" />
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    );
+                                                })}
+                                            </div>
+                                        )}
+                                    </div>
+                                );
+                            })}
+                        </div>
+
+                        <div className="mt-8 bg-white rounded-lg shadow-sm p-5 text-center text-sm text-gray-600">
+                            <p className="mb-2">
+                                Progress is saved locally in your browser. Use Notion for detailed notes and reflections.
+                            </p>
+                            <p className="text-xs text-gray-500">
+                                Last updated: June 2026 • All resources are free (Coursera Plus valid through Sept 15, 2026)
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            );
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<DrugDiscoveryAISyllabus />);
+    </script>
+</body>
+</html>
