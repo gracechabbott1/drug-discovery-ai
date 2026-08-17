@@ -10,7 +10,6 @@
 <style>
   :root{
     --paper:#E9EBE6;
-    --paper-2:#DFE2DB;
     --ink:#151E1A;
     --trace:#2F4A3C;
     --trace-soft:#8B9A90;
@@ -27,109 +26,94 @@
     background-size:28px 28px;
     color:var(--ink);
     font-family:"IBM Plex Sans",system-ui,sans-serif;
-    font-size:16px;
-    line-height:1.55;
+    font-size:16px;line-height:1.55;
   }
   .wrap{max-width:920px;margin:0 auto;padding:40px 22px 90px}
+  a{color:var(--trace)}
 
-  /* ---- masthead ---- */
-  .eyebrow{
-    font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.14em;
-    text-transform:uppercase;color:var(--trace-soft);margin:0 0 14px;
-  }
-  h1{
-    font-family:"Instrument Serif",Georgia,serif;font-weight:400;
-    font-size:clamp(42px,9vw,76px);line-height:.98;margin:0 0 6px;letter-spacing:-.01em;
-  }
+  .eyebrow{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--trace-soft);margin:0 0 14px}
+  h1{font-family:"Instrument Serif",Georgia,serif;font-weight:400;
+    font-size:clamp(42px,9vw,76px);line-height:.98;margin:0 0 6px;letter-spacing:-.01em}
   h1 em{font-style:italic;color:var(--trace)}
   .standfirst{max-width:46ch;margin:0 0 34px;color:#3D4A44}
 
-  /* ---- signature: the loss curve ---- */
-  .run{
-    border:1px solid var(--rule);background:rgba(255,255,255,.55);
-    padding:20px 18px 12px;margin-bottom:14px;
-  }
-  .run-head{
-    display:flex;justify-content:space-between;align-items:baseline;gap:12px;
+  .run{border:1px solid var(--rule);background:rgba(255,255,255,.55);
+    padding:20px 18px 12px;margin-bottom:8px}
+  .run-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px;
     font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.1em;
-    text-transform:uppercase;color:var(--trace-soft);margin-bottom:10px;
-  }
+    text-transform:uppercase;color:var(--trace-soft);margin-bottom:10px}
   .run-head b{color:var(--ink);font-weight:500}
   svg{display:block;width:100%;height:132px;overflow:visible}
   .axis{font-family:"IBM Plex Mono",monospace;font-size:9px;fill:var(--trace-soft)}
-  .marker{cursor:pointer}
-  .marker circle{transition:r .18s ease,fill .18s ease}
+  .marker circle{transition:r .18s ease}
   .marker:hover circle{r:6}
+  .hint{font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--trace-soft);
+    margin:0 0 8px}
 
-  /* ---- phases ---- */
   .phase{margin-top:40px}
-  .phase-bar{
-    display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;
-    border-bottom:1.5px solid var(--ink);padding-bottom:7px;margin-bottom:2px;
-  }
-  .phase-n{
-    font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.1em;
-    color:var(--trace-soft);
-  }
-  .phase-name{
-    font-family:"Instrument Serif",Georgia,serif;font-size:26px;line-height:1.1;flex:1;
-  }
+  .phase-bar{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;
+    border-bottom:1.5px solid var(--ink);padding-bottom:7px;margin-bottom:2px}
+  .phase-n{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.1em;color:var(--trace-soft)}
+  .phase-name{font-family:"Instrument Serif",Georgia,serif;font-size:26px;line-height:1.1;flex:1}
   .phase-meta{font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--trace-soft)}
-  .tag-new{
-    background:var(--live);color:#fff;font-family:"IBM Plex Mono",monospace;
-    font-size:9px;letter-spacing:.12em;padding:2px 6px;text-transform:uppercase;
-  }
+  .tag-new{background:var(--live);color:#fff;font-family:"IBM Plex Mono",monospace;
+    font-size:9px;letter-spacing:.12em;padding:2px 6px;text-transform:uppercase}
 
-  /* ---- week rows ---- */
-  .wk{
-    display:flex;align-items:flex-start;gap:14px;
-    padding:13px 4px;border-bottom:1px solid var(--rule);
-    cursor:pointer;transition:background .15s ease;
-  }
-  .wk:hover{background:rgba(255,255,255,.5)}
-  .wk:focus-visible{outline:2px solid var(--trace);outline-offset:2px}
-  .box{
-    flex:none;width:15px;height:15px;margin-top:4px;border:1.5px solid var(--trace);
-    background:transparent;position:relative;
-  }
+  .wk{border-bottom:1px solid var(--rule)}
+  .wk-head{display:flex;align-items:flex-start;gap:14px;padding:13px 4px;
+    cursor:pointer;transition:background .15s ease}
+  .wk-head:hover{background:rgba(255,255,255,.5)}
+  .box{flex:none;width:15px;height:15px;margin-top:4px;border:1.5px solid var(--trace);
+    background:transparent;position:relative;cursor:pointer}
+  .box:focus-visible{outline:2px solid var(--trace);outline-offset:2px}
   .wk[data-done="1"] .box{background:var(--trace)}
-  .wk[data-done="1"] .box::after{
-    content:"";position:absolute;left:3.5px;top:.5px;width:4px;height:8px;
-    border:solid var(--paper);border-width:0 1.6px 1.6px 0;transform:rotate(42deg);
-  }
-  .wk-n{
-    font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--trace-soft);
-    flex:none;width:26px;margin-top:2px;
-  }
+  .wk[data-done="1"] .box::after{content:"";position:absolute;left:3.5px;top:.5px;
+    width:4px;height:8px;border:solid var(--paper);border-width:0 1.6px 1.6px 0;transform:rotate(42deg)}
+  .wk-n{font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--trace-soft);
+    flex:none;width:26px;margin-top:2px}
   .wk-body{flex:1;min-width:0}
   .wk-title{font-weight:500}
   .wk[data-done="1"] .wk-title{color:var(--trace-soft);text-decoration:line-through}
   .wk-note{font-size:13.5px;color:#5A6862;margin-top:2px}
-  .wk-hrs{
-    font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--trace-soft);
-    flex:none;margin-top:3px;
-  }
-  .fork{
-    border-left:3px solid var(--live);background:rgba(200,144,27,.09);
-    padding:12px 14px;margin:14px 0 2px;font-size:14px;
-  }
+  .wk-hrs{font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--trace-soft);
+    flex:none;margin-top:3px}
+  .chev{flex:none;margin-top:3px;color:var(--trace-soft);font-size:12px;
+    transition:transform .18s ease;font-family:"IBM Plex Mono",monospace}
+  .wk[data-open="1"] .chev{transform:rotate(90deg)}
+
+  .res{display:none;padding:2px 4px 18px 55px}
+  .wk[data-open="1"] .res{display:block}
+  .res li{list-style:none;margin:0 0 10px;display:flex;gap:10px;align-items:baseline}
+  .res ul{margin:0;padding:0}
+  .kind{font-family:"IBM Plex Mono",monospace;font-size:9px;letter-spacing:.1em;
+    text-transform:uppercase;color:var(--trace-soft);flex:none;width:62px;padding-top:2px}
+  .res a{font-weight:500;text-decoration:none;border-bottom:1px solid var(--trace-soft)}
+  .res a:hover{border-bottom-color:var(--trace)}
+  .res .why{display:block;font-size:13px;color:#5A6862;font-weight:400}
+  .res .t{font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--trace-soft);
+    margin-left:6px}
+  .notion{margin-top:14px;font-family:"IBM Plex Mono",monospace;font-size:11px;
+    letter-spacing:.08em;text-transform:uppercase}
+
+  .fork{border-left:3px solid var(--live);background:rgba(200,144,27,.09);
+    padding:12px 14px;margin:14px 0 2px;font-size:14px}
   .fork b{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.1em;
     text-transform:uppercase;display:block;margin-bottom:4px;color:#8A6210}
 
-  footer{
-    margin-top:56px;padding-top:18px;border-top:1px solid var(--rule);
+  footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--rule);
     font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--trace-soft);
-    display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;
-  }
-  button.reset{
-    font:inherit;color:inherit;background:none;border:none;padding:0;
-    text-decoration:underline;cursor:pointer;
-  }
+    display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  button.reset{font:inherit;color:inherit;background:none;border:none;padding:0;
+    text-decoration:underline;cursor:pointer}
   @media (prefers-reduced-motion:reduce){*{transition:none!important}}
   @media (max-width:560px){
     .wrap{padding:28px 16px 70px}
     .wk-hrs{display:none}
     svg{height:100px}
+    .res{padding-left:30px}
+    .res li{flex-direction:column;gap:2px}
+    .kind{width:auto}
   }
 </style>
 </head>
@@ -147,6 +131,7 @@
     </div>
     <svg id="curve" viewBox="0 0 900 132" preserveAspectRatio="none" aria-label="Progress curve across 23 weeks"></svg>
   </section>
+  <p class="hint">Tick the box to log a week · click the row to open its resources</p>
 
   <div id="phases"></div>
 
@@ -158,52 +143,167 @@
 
 <script>
 const KEY = "curriculum-v2-progress";
+const K = { V:"Video", P:"Paper", J:"Project", B:"Reading", D:"Dataset" };
 
 const PHASES = [
-  { n:"Phase 1", name:"Foundations", range:"Weeks 1–3", isNew:false, weeks:[
-    {w:1,  t:"Python + Pandas crash",                        note:"Kaggle micro-courses, ChEMBL loaded in Colab", h:8},
-    {w:2,  t:"Data wrangling on real drug data",             note:"Joins, missing values, groupby on messy tables", h:8},
-    {w:3,  t:"EDA + first predictive toy model",             note:"Intro to ML micro-course; a model that runs", h:8},
-  ]},
-  { n:"Phase 2", name:"Classical ML theory", range:"Weeks 4–9", isNew:false, weeks:[
-    {w:4,  t:"Ng C1 — regression",                           note:"Linear regression, gradient descent", h:8},
-    {w:5,  t:"Ng C1 — classification",                       note:"Logistic regression, regularization", h:8},
-    {w:6,  t:"Ng C2 — neural networks",                      note:"Forward pass, activations, TensorFlow basics", h:8},
-    {w:7,  t:"Ng C2 — decision trees & ML advice",           note:"Bias/variance, error analysis, what to do next", h:8},
-    {w:8,  t:"Ng C3 — unsupervised learning",                note:"Clustering, anomaly detection", h:7},
-    {w:9,  t:"Consolidation + first portfolio piece",        note:"One clean repo. Ship it before moving on", h:8},
-  ]},
-  { n:"Phase 3", name:"Neural networks from scratch", range:"Weeks 10–13", isNew:true, weeks:[
-    {w:10, t:"micrograd — build an autograd engine",         note:"Type it from an empty file. Do not clone the repo", h:9},
-    {w:11, t:"makemore 1–2 — bigrams to an MLP",             note:"Embeddings, train/dev/test, Bengio 2003", h:9.5},
-    {w:12, t:"makemore 3–4 — BatchNorm & manual backprop",   note:"Hardest week here. Differentiate the MLP by hand", h:9.5},
-    {w:13, t:"WaveNet + build GPT from scratch",             note:"Self-attention, causal masking, nanoGPT trained", h:10},
-  ]},
-  { n:"Phase 4", name:"Applied deep learning", range:"Weeks 14–18", isNew:false, weeks:[
-    {w:14, t:"fast.ai L1 — build a classifier",              note:"A working model in one sitting", h:8},
-    {w:15, t:"fast.ai L2–3 — production & SGD",              note:"Deploy something. Anything", h:8},
-    {w:16, t:"fast.ai L4 — NLP & transformers",              note:"Now with Week 13 underneath it", h:8},
-    {w:17, t:"fast.ai L5–6 — tabular & collaborative",       note:"Closest thing to most real biotech data", h:8},
-    {w:18, t:"fast.ai L7 + molecular deep learning",         note:"Bridge week into the specialization", h:8},
-  ]},
-  { n:"Phase 5", name:"Biotech specialization", range:"Weeks 19–23", isNew:false, fork:true, weeks:[
-    {w:19, t:"RDKit & molecular representations",            note:"SMILES, fingerprints, a reusable featurizer", h:10},
-    {w:20, t:"Molecular property prediction (ADMET)",        note:"TDC benchmarks, scaffold splits, a baseline", h:11},
-    {w:21, t:"Graph neural networks for molecules",          note:"PyG + MPNN. Beat — or don't beat — Week 20", h:12.5},
-    {w:22, t:"Protein language models",                      note:"ESM-2 embeddings into a downstream classifier", h:10},
-    {w:23, t:"Capstone + portfolio polish",                  note:"README, results table, honest limitations", h:16},
-  ]},
+{ n:"Phase 1", name:"Foundations", range:"Weeks 1–3", weeks:[
+  { w:1, t:"Python + Pandas crash", h:8,
+    note:"Kaggle micro-courses, ChEMBL loaded in Colab",
+    notion:"https://app.notion.com/p/37fa8c8036928167b8c7d11ed3501c95",
+    r:[
+      {k:K.V, n:"Kaggle: Pandas micro-course", u:"https://www.kaggle.com/learn/pandas", t:"4h", why:"Fast, hands-on, free"},
+      {k:K.B, n:"Pandas 10-minute intro", u:"https://pandas.pydata.org/docs/user_guide/10min.html", t:"1h", why:"Keep open while you code"},
+      {k:K.D, n:"ChEMBL", u:"https://www.ebi.ac.uk/chembl/", t:"1h", why:"Get the data loaded"},
+      {k:K.J, n:"Load + summarise a ChEMBL set", u:"https://colab.research.google.com/", t:"2h", why:"shape, describe, missing values, groupby"}]},
+  { w:2, t:"Data wrangling on real drug data", h:8,
+    note:"All practice, no lectures",
+    notion:"https://app.notion.com/p/37fa8c80369281e2980fc9f794ade192",
+    r:[
+      {k:K.V, n:"Kaggle: Data Cleaning micro-course", u:"https://www.kaggle.com/learn/data-cleaning", t:"3h", why:"Missing data, scaling, parsing"},
+      {k:K.B, n:"Seaborn tutorial", u:"https://seaborn.pydata.org/tutorial.html", t:"1.5h", why:"Distributions, correlations, heatmaps"},
+      {k:K.J, n:"Clean + visualise a PubChem set", u:"https://pubchem.ncbi.nlm.nih.gov/", t:"3.5h", why:"5+ plots, write 3 observations"}]},
+  { w:3, t:"EDA + first predictive toy model", h:8,
+    note:"A model that runs end to end",
+    notion:"https://app.notion.com/p/37fa8c8036928154abcccefcac8bcc7a",
+    r:[
+      {k:K.V, n:"Kaggle: Intro to Machine Learning", u:"https://www.kaggle.com/learn/intro-to-machine-learning", t:"3h", why:"Train/validate/predict loop"},
+      {k:K.V, n:"Kaggle: Data Visualization", u:"https://www.kaggle.com/learn/data-visualization", t:"2h", why:"Optional if Week 2 felt thin"},
+      {k:K.J, n:"First predictive model", u:"https://colab.research.google.com/", t:"3h", why:"Doesn't need to be good. Needs to run"}]}]},
+
+{ n:"Phase 2", name:"Classical ML theory", range:"Weeks 4–9", weeks:[
+  { w:4, t:"Ng C1 — regression", h:8, note:"Linear regression, gradient descent",
+    notion:"https://app.notion.com/p/37fa8c803692815fa1ebd380e5228763",
+    r:[
+      {k:K.V, n:"ML Specialization — Course 1, Week 1", u:"https://www.coursera.org/specializations/machine-learning-introduction", t:"6h", why:"Covered by Coursera Plus"},
+      {k:K.J, n:"Lab exercises", u:"https://www.coursera.org/specializations/machine-learning-introduction", t:"2h", why:"Do them in the notebook, not just watch"}]},
+  { w:5, t:"Ng C1 — classification", h:8, note:"Logistic regression, regularization",
+    notion:"https://app.notion.com/p/37fa8c80369281a2bc8ec33c986f98b7",
+    r:[
+      {k:K.V, n:"ML Specialization — C1, Weeks 2–3", u:"https://www.coursera.org/specializations/machine-learning-introduction", t:"6h", why:"Classification & regularization"},
+      {k:K.J, n:"Lab exercises", u:"https://www.coursera.org/specializations/machine-learning-introduction", t:"2h", why:""}]},
+  { w:6, t:"Ng C2 — neural networks", h:8, note:"Forward pass, activations",
+    notion:"https://app.notion.com/p/37fa8c803692819db84ed16bedabfaa6",
+    r:[
+      {k:K.V, n:"ML Specialization — C2, Weeks 1–2", u:"https://www.coursera.org/specializations/machine-learning-introduction", t:"6h", why:"Your first neural nets"},
+      {k:K.J, n:"Lab exercises", u:"https://www.coursera.org/specializations/machine-learning-introduction", t:"2h", why:"Phase 3 will rebuild all of this by hand"}]},
+  { w:7, t:"Ng C2 — decision trees & ML advice", h:8, note:"Bias/variance, error analysis",
+    notion:"https://app.notion.com/p/37fa8c80369281b4bacee00f4eacc3cb",
+    r:[
+      {k:K.V, n:"ML Specialization — C2, Weeks 3–4", u:"https://www.coursera.org/specializations/machine-learning-introduction", t:"6h", why:"The 'what do I do next' week — most useful on the job"},
+      {k:K.J, n:"Lab exercises", u:"https://www.coursera.org/specializations/machine-learning-introduction", t:"2h", why:""}]},
+  { w:8, t:"Ng C3 — unsupervised learning", h:7, note:"Clustering, anomaly detection",
+    notion:"https://app.notion.com/p/37fa8c803692812f8d8aee1111cdf721",
+    r:[
+      {k:K.V, n:"ML Specialization — C3, Weeks 1–2", u:"https://www.coursera.org/specializations/machine-learning-introduction", t:"5h", why:"Clustering & anomaly detection"},
+      {k:K.J, n:"Lab exercises", u:"https://www.coursera.org/specializations/machine-learning-introduction", t:"2h", why:""}]},
+  { w:9, t:"Consolidation + first portfolio piece", h:8, note:"One clean repo. Ship it before moving on",
+    notion:"https://app.notion.com/p/37fa8c803692815290d0e3bf0df2c0a0",
+    r:[
+      {k:K.V, n:"ML Specialization — C3, Week 3 (skim)", u:"https://www.coursera.org/specializations/machine-learning-introduction", t:"3h", why:"Recommenders & intro RL — skim only"},
+      {k:K.J, n:"First portfolio repo", u:"https://github.com/", t:"5h", why:"README, clean notebook, honest results"}]}]},
+
+{ n:"Phase 3", name:"Neural networks from scratch", range:"Weeks 10–13", isNew:true, weeks:[
+  { w:10, t:"micrograd — build an autograd engine", h:9, note:"Type it from an empty file. Do not clone the repo",
+    notion:"https://app.notion.com/p/3bda8c80369281d88224c0ff0069f199",
+    r:[
+      {k:K.V, n:"Zero to Hero #1 — backpropagation, spelled out", u:"https://karpathy.ai/zero-to-hero.html", t:"2.5h", why:"Watch at 1x. No skipping"},
+      {k:K.J, n:"micrograd, typed by hand", u:"https://github.com/karpathy/micrograd", t:"5h", why:"Reference only when genuinely stuck"},
+      {k:K.V, n:"3Blue1Brown — Neural Networks Ch 1–4", u:"https://www.3blue1brown.com/topics/neural-networks", t:"1.5h", why:"Visual intuition for what backprop computes"}]},
+  { w:11, t:"makemore 1–2 — bigrams to an MLP", h:9.5, note:"Embeddings, train/dev/test splits",
+    notion:"https://app.notion.com/p/3bda8c8036928197a04dcf9bf59dd557",
+    r:[
+      {k:K.V, n:"Zero to Hero #2 — bigram language model", u:"https://karpathy.ai/zero-to-hero.html", t:"2h", why:"Counting, then the same thing as a neural net"},
+      {k:K.V, n:"Zero to Hero #3 — MLP", u:"https://karpathy.ai/zero-to-hero.html", t:"1.5h", why:"Embeddings and hidden layers"},
+      {k:K.J, n:"Build both from an empty notebook", u:"https://github.com/karpathy/nn-zero-to-hero", t:"5h", why:"Do the end-of-video exercises"},
+      {k:K.P, n:"Bengio et al. 2003", u:"https://www.jmlr.org/papers/v3/bengio03a.html", t:"1h", why:"The paper you just reimplemented"}]},
+  { w:12, t:"makemore 3–4 — BatchNorm & manual backprop", h:9.5, note:"Hardest week here. Budget two if you need to",
+    notion:"https://app.notion.com/p/3bda8c80369281eab8f7fad24e200c5f",
+    r:[
+      {k:K.V, n:"Zero to Hero #4 — activations & gradients, BatchNorm", u:"https://karpathy.ai/zero-to-hero.html", t:"2h", why:"Why initialization matters, dead neurons"},
+      {k:K.V, n:"Zero to Hero #5 — becoming a backprop ninja", u:"https://karpathy.ai/zero-to-hero.html", t:"1.5h", why:"No autograd. Just you and the chain rule"},
+      {k:K.J, n:"The Part 4 exercise, in full", u:"https://github.com/karpathy/nn-zero-to-hero", t:"6h", why:"Highest-value exercise in the curriculum. Do not skip"}]},
+  { w:13, t:"WaveNet + build GPT from scratch", h:10, note:"Self-attention, causal masking, nanoGPT trained",
+    notion:"https://app.notion.com/p/3bda8c8036928124952edd8bc214c2f1",
+    r:[
+      {k:K.V, n:"Zero to Hero #6 — building a WaveNet", u:"https://karpathy.ai/zero-to-hero.html", t:"1h", why:"Dilated/hierarchical — relevant to biosignal work"},
+      {k:K.V, n:"Zero to Hero #7 — let's build GPT", u:"https://karpathy.ai/zero-to-hero.html", t:"2h", why:"Attention, multi-head, residuals, layernorm"},
+      {k:K.J, n:"Type out nanoGPT and train it", u:"https://github.com/karpathy/nanoGPT", t:"6h", why:"Train on any text. Get it generating"},
+      {k:K.P, n:"Attention Is All You Need", u:"https://arxiv.org/abs/1706.03762", t:"1h", why:"Read after the video — it'll finally be readable"},
+      {k:K.V, n:"Optional: build the GPT tokenizer", u:"https://karpathy.ai/zero-to-hero.html", t:"2h", why:"Stretch goal if the week goes fast"}]}]},
+
+{ n:"Phase 4", name:"Applied deep learning", range:"Weeks 14–18", weeks:[
+  { w:14, t:"fast.ai L1 — build a classifier", h:8, note:"A working model in one sitting",
+    notion:"https://app.notion.com/p/37fa8c80369281c8add9f94f0cdfe479",
+    r:[
+      {k:K.V, n:"fast.ai Lesson 1 — Getting Started", u:"https://course.fast.ai/Lessons/lesson1.html", t:"3h", why:"Watch and follow along"},
+      {k:K.J, n:"Run the Lesson 1 notebook", u:"https://course.fast.ai/", t:"3h", why:"Break it, fix it, tweak it"},
+      {k:K.B, n:"Set up Colab GPU / PyTorch", u:"https://pytorch.org/get-started/locally/", t:"2h", why:"Confirm the GPU actually works"}]},
+  { w:15, t:"fast.ai L2–3 — production & SGD", h:8, note:"Deploy something. Anything",
+    notion:"https://app.notion.com/p/37fa8c803692810f8657e3fc860ebf04",
+    r:[
+      {k:K.V, n:"fast.ai Lessons 2–3", u:"https://course.fast.ai/", t:"5h", why:"From notebook to deployed app"},
+      {k:K.J, n:"Deploy a model", u:"https://huggingface.co/spaces", t:"3h", why:"A public URL beats a local notebook"}]},
+  { w:16, t:"fast.ai L4 — NLP & transformers", h:8, note:"Now with Week 13 underneath it",
+    notion:"https://app.notion.com/p/37fa8c80369281908c2ce420f07014bb",
+    r:[
+      {k:K.V, n:"fast.ai Lesson 4 — NLP", u:"https://course.fast.ai/", t:"3h", why:"You'll recognise everything in it"},
+      {k:K.B, n:"HuggingFace course, Ch 1–3", u:"https://huggingface.co/learn/nlp-course", t:"3h", why:"The library the industry actually uses"},
+      {k:K.J, n:"Fine-tune a pretrained model", u:"https://huggingface.co/docs/transformers/training", t:"2h", why:""}]},
+  { w:17, t:"fast.ai L5–6 — tabular & collaborative", h:8, note:"Closest thing to most real biotech data",
+    notion:"https://app.notion.com/p/37fa8c803692811fb0b0c10bbdc7b3c6",
+    r:[
+      {k:K.V, n:"fast.ai Lessons 5–6", u:"https://course.fast.ai/", t:"5h", why:"Tabular & collaborative filtering"},
+      {k:K.J, n:"Tabular model on assay data", u:"https://colab.research.google.com/", t:"3h", why:"Gradient boosting baseline first, always"}]},
+  { w:18, t:"fast.ai L7 + molecular deep learning", h:8, note:"Bridge week into the specialization",
+    notion:"https://app.notion.com/p/37fa8c80369281198bdee75e3d72442e",
+    r:[
+      {k:K.V, n:"fast.ai Lesson 7", u:"https://course.fast.ai/", t:"3h", why:""},
+      {k:K.B, n:"DeepChem — first tutorials", u:"https://deepchem.io/tutorials/", t:"3h", why:"Where chemistry meets the models you now know"},
+      {k:K.J, n:"Scope the specialization project", u:"https://github.com/", t:"2h", why:"Decide Track A or Track B before Week 19"}]}]},
+
+{ n:"Phase 5", name:"Biotech specialization", range:"Weeks 19–23", fork:true, weeks:[
+  { w:19, t:"RDKit & molecular representations", h:10, note:"SMILES, fingerprints, a reusable featurizer",
+    notion:"https://app.notion.com/p/3bda8c8036928123b959d1236f1e088f",
+    r:[
+      {k:K.B, n:"RDKit: Getting Started in Python", u:"https://www.rdkit.org/docs/GettingStartedInPython.html", t:"3h", why:"Molecules as objects"},
+      {k:K.B, n:"Fingerprints & molecular similarity", u:"https://www.rdkit.org/docs/GettingStartedInPython.html#fingerprinting-and-molecular-similarity", t:"2h", why:"Morgan/ECFP, MACCS, descriptors"},
+      {k:K.D, n:"ChEMBL", u:"https://www.ebi.ac.uk/chembl/", t:"1h", why:"Back where Week 1 started, with real tools"},
+      {k:K.J, n:"Featurization pipeline", u:"https://colab.research.google.com/", t:"4h", why:"SMILES in → clean feature matrix out"}]},
+  { w:20, t:"Molecular property prediction (ADMET)", h:11, note:"TDC benchmarks, scaffold splits, a baseline",
+    notion:"https://app.notion.com/p/3bda8c80369281d890e0ec70f4595fe9",
+    r:[
+      {k:K.D, n:"Therapeutics Data Commons", u:"https://tdcommons.ai/", t:"2h", why:"Clean benchmark tasks with proper splits"},
+      {k:K.V, n:"DeepChem tutorials", u:"https://deepchem.io/tutorials/", t:"3h", why:"The property-prediction sequence"},
+      {k:K.P, n:"MoleculeNet", u:"https://moleculenet.org/", t:"1h", why:"Why scaffold splits matter"},
+      {k:K.J, n:"Baseline ADMET model", u:"https://colab.research.google.com/", t:"5h", why:"Record the score. You'll challenge it in Week 21"}]},
+  { w:21, t:"Graph neural networks for molecules", h:12.5, note:"PyG + MPNN. Beat — or don't beat — Week 20",
+    notion:"https://app.notion.com/p/3bda8c80369281719a4ed41fe04035db",
+    r:[
+      {k:K.B, n:"PyTorch Geometric — introduction", u:"https://pytorch-geometric.readthedocs.io/en/latest/get_started/introduction.html", t:"3h", why:"Data objects, message passing, graph batching"},
+      {k:K.V, n:"Stanford CS224W — selected lectures", u:"https://web.stanford.edu/class/cs224w/", t:"3h", why:"GNN fundamentals only. Don't do the whole course"},
+      {k:K.P, n:"Neural Message Passing for Quantum Chemistry", u:"https://arxiv.org/abs/1704.01212", t:"1.5h", why:"The MPNN framework"},
+      {k:K.J, n:"GNN vs. Week 20 baseline", u:"https://colab.research.google.com/", t:"5h", why:"An honest negative result is a strong portfolio piece"}]},
+  { w:22, t:"Protein language models", h:10, note:"ESM-2 embeddings into a downstream classifier",
+    notion:"https://app.notion.com/p/3bda8c8036928194950fe7f5969c9b62",
+    r:[
+      {k:K.B, n:"ESM — Evolutionary Scale Modeling", u:"https://github.com/facebookresearch/esm", t:"2h", why:"Per-residue and per-sequence embeddings"},
+      {k:K.P, n:"Lin et al. — ESM-2 / ESMFold", u:"https://www.science.org/doi/10.1126/science.ade2574", t:"2h", why:"What masked LM on sequences actually learns"},
+      {k:K.D, n:"UniProt", u:"https://www.uniprot.org/", t:"1h", why:"Pull a labelled protein set"},
+      {k:K.J, n:"Embeddings → classifier", u:"https://colab.research.google.com/", t:"5h", why:"Frozen ESM + logistic regression vs. one-hot baseline"}]},
+  { w:23, t:"Capstone + portfolio polish", h:16, note:"README, results table, honest limitations",
+    notion:"https://app.notion.com/p/3bda8c803692816cb513db06c2500b50",
+    r:[
+      {k:K.J, n:"One project, deep", u:"https://github.com/", t:"8h", why:"Best candidate: extend Week 21 with real error analysis"},
+      {k:K.J, n:"Clean the repo", u:"https://github.com/", t:"3h", why:"Reproducible notebook. No dead cells"},
+      {k:K.B, n:"Write the post-mortem", u:"https://github.com/", t:"3h", why:"What failed and why — what technical founders actually read"},
+      {k:K.J, n:"CV, LinkedIn, outreach", u:"https://www.linkedin.com/", t:"2h", why:"One page. Then start sending"}]}]}
 ];
 
 const ALL = PHASES.flatMap(p => p.weeks);
+const open = new Set();
 
-function load(){
-  try { return new Set(JSON.parse(localStorage.getItem(KEY)) || []); }
-  catch { return new Set(); }
-}
-function save(set){
-  try { localStorage.setItem(KEY, JSON.stringify([...set])); } catch {}
-}
+function load(){ try { return new Set(JSON.parse(localStorage.getItem(KEY)) || []); } catch { return new Set(); } }
+function save(s){ try { localStorage.setItem(KEY, JSON.stringify([...s])); } catch {} }
 let done = load();
 
 function render(){
@@ -220,42 +320,51 @@ function render(){
         ${p.isNew ? '<span class="tag-new">New</span>' : ''}
         <span class="phase-meta">${p.range} · ${hrs} hrs</span>
       </div>`;
-    if (p.fork) {
+    if (p.fork){
       const f = document.createElement("div");
       f.className = "fork";
       f.innerHTML = `<b>Fork point</b>Everything above transfers anywhere. Track A is drug discovery (below). Track B is biosignal / NeuroAI — EEG foundation models, shorter ramp given the neuroimaging background. Decide when you get here.`;
       sec.appendChild(f);
     }
     p.weeks.forEach(k => {
-      const row = document.createElement("div");
-      row.className = "wk";
-      row.tabIndex = 0;
-      row.setAttribute("role","checkbox");
-      row.dataset.w = k.w;
-      row.dataset.done = done.has(k.w) ? "1" : "0";
-      row.setAttribute("aria-checked", done.has(k.w));
-      row.innerHTML = `
-        <span class="box" aria-hidden="true"></span>
-        <span class="wk-n">${String(k.w).padStart(2,"0")}</span>
-        <span class="wk-body">
-          <span class="wk-title">${k.t}</span>
-          <div class="wk-note">${k.note}</div>
-        </span>
-        <span class="wk-hrs">${k.h}h</span>`;
-      const toggle = () => {
+      const el = document.createElement("div");
+      el.className = "wk";
+      el.dataset.done = done.has(k.w) ? "1" : "0";
+      el.dataset.open = open.has(k.w) ? "1" : "0";
+      el.innerHTML = `
+        <div class="wk-head">
+          <button class="box" role="checkbox" aria-checked="${done.has(k.w)}"
+                  aria-label="Mark week ${k.w} complete"></button>
+          <span class="wk-n">${String(k.w).padStart(2,"0")}</span>
+          <span class="wk-body">
+            <span class="wk-title">${k.t}</span>
+            <div class="wk-note">${k.note}</div>
+          </span>
+          <span class="wk-hrs">${k.h}h</span>
+          <span class="chev" aria-hidden="true">›</span>
+        </div>
+        <div class="res">
+          <ul>${k.r.map(x=>`
+            <li><span class="kind">${x.k}</span>
+              <span><a href="${x.u}" target="_blank" rel="noopener">${x.n}</a><span class="t">${x.t}</span>
+              ${x.why ? `<span class="why">${x.why}</span>` : ""}</span></li>`).join("")}
+          </ul>
+          <div class="notion"><a href="${k.notion}" target="_blank" rel="noopener">Open week ${k.w} in Notion →</a></div>
+        </div>`;
+      el.querySelector(".box").addEventListener("click", e => {
+        e.stopPropagation();
         done.has(k.w) ? done.delete(k.w) : done.add(k.w);
         save(done); render();
-      };
-      row.addEventListener("click", toggle);
-      row.addEventListener("keydown", e => {
-        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); toggle(); }
       });
-      sec.appendChild(row);
+      el.querySelector(".wk-head").addEventListener("click", () => {
+        open.has(k.w) ? open.delete(k.w) : open.add(k.w);
+        render();
+      });
+      sec.appendChild(el);
     });
     host.appendChild(sec);
   });
-  stats();
-  curve();
+  stats(); curve();
 }
 
 function stats(){
@@ -266,32 +375,23 @@ function stats(){
   document.getElementById("hrs").textContent = Math.round(hrs);
 }
 
-/* The signature: a loss curve. Descends 23 steps with realistic plateaus.
-   Solid where completed, dashed ahead. Week 12 gets the biggest plateau. */
 function curve(){
   const svg = document.getElementById("curve");
-  const W = 900, H = 132, padX = 14, padY = 12;
-  const shape = [1,.93,.86,.80,.72,.68,.60,.56,.52,.47,.44,.43,.30,.28,.25,.22,.19,.17,.15,.12,.09,.06,.03];
-  const pts = shape.map((v,i)=>[
-    padX + i*(W-2*padX)/22,
-    padY + v*(H-2*padY-16)
-  ]);
-  const upto = Math.max(...[0,...[...done]]);
-  const cut = upto ? pts.findIndex((_,i)=>ALL[i].w===upto) : -1;
-
+  const W=900, H=132, padX=14, padY=12;
+  const shape=[1,.93,.86,.80,.72,.68,.60,.56,.52,.47,.44,.43,.30,.28,.25,.22,.19,.17,.15,.12,.09,.06,.03];
+  const pts = shape.map((v,i)=>[padX + i*(W-2*padX)/22, padY + v*(H-2*padY-16)]);
+  const upto = done.size ? Math.max(...done) : 0;
+  const cut = upto ? ALL.findIndex(k=>k.w===upto) : -1;
   const path = a => a.map((p,i)=>(i?"L":"M")+p[0].toFixed(1)+" "+p[1].toFixed(1)).join(" ");
-  const solid = cut >= 0 ? pts.slice(0, cut+1) : [];
+  const solid = cut>=0 ? pts.slice(0,cut+1) : [];
   const ahead = pts.slice(Math.max(cut,0));
-
-  let dots = "";
+  let dots="";
   pts.forEach((p,i)=>{
-    const wk = ALL[i];
-    const isDone = done.has(wk.w);
+    const wk=ALL[i], isDone=done.has(wk.w);
     dots += `<g class="marker"><title>Week ${wk.w} — ${wk.t}</title>
       <circle cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="${isDone?4:2.5}"
         fill="${isDone?"var(--trace)":"var(--trace-soft)"}"/></g>`;
   });
-
   svg.innerHTML = `
     <path d="${path(ahead)}" fill="none" stroke="var(--trace-soft)" stroke-width="1.5" stroke-dasharray="4 5"/>
     ${solid.length>1 ? `<path d="${path(solid)}" fill="none" stroke="var(--trace)" stroke-width="2.5"/>` : ""}
